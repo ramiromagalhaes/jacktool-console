@@ -5,7 +5,7 @@
 #include <QStringList>
 #include <QDir>
 
-#include "../jacktool/markings.h"
+#include "../jacktool-common/markings.h"
 
 
 
