@@ -1,4 +1,4 @@
-jacktool-console /mnt \
+./jacktool-console /mnt \
 /home/ramiro/Imagens/2006-12-17-Zoologico \
 /home/ramiro/Imagens/2007-08-04-IlhaGrande \
 /home/ramiro/Imagens/2009-03-08-Escalada \
