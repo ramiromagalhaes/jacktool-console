@@ -17,17 +17,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
            patchtool.cpp \
-           ../jacktool/markings.cpp \
-           ../jacktool/extract_patch.cpp
+           ../jacktool-common/markings.cpp \
+           ../jacktool-common/extract_patch.cpp
 
-HEADERS  += ../jacktool/markings.h \
-           patchtool.h \
-           ../jacktool/PatchExtractorConfiguration.h \
-           ../jacktool/extract_patch.h
+HEADERS  += patchtool.h \
+           ../jacktool-common/markings.h \
+           ../jacktool-common/PatchExtractorConfiguration.h \
+           ../jacktool-common/extract_patch.h \
+           ../jacktool-common/Rectangle.h
 
-
-
-#INCLUDEPATH += /home/ramiro/workspace/jacktool/
 
 
 unix {
