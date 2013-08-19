@@ -1,4 +1,5 @@
-#include "markings.h"
+#include "../jacktool-common/markings.h"
+#include "../jacktool-common/Rectangle.h"
 #include "extract_patch.h"
 
 #include <opencv2/core/core.hpp>
@@ -13,7 +14,7 @@ void processAll(const Markings & markings, const PatchExtractorConfiguration &cf
 {
     boost::filesystem::path archivePath( markings.getBaseDirectory() );
 
-    for(std::map<std::string, std::vector<Rectangle>*>::const_iterator it = markings.exclusionsBegin(); it != markings.exclusionsEnd(); ++it) {
+    for(std::map<std::string, std::vector<Rectangle>*>::const_iterator it = markings.imagesExclusionsMapBegin(); it != markings.imagesExclusionsMapEnd(); ++it) {
         const std::map<std::string, std::vector<Rectangle> *>::value_type v = *it;
 
         const boost::filesystem::path file = archivePath / v.first;

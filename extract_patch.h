@@ -4,8 +4,7 @@
 #include <vector>
 #include <boost/filesystem.hpp>
 
-#include "Rectangle.h"
-#include "PatchExtractorConfiguration.h"
+#include "../jacktool-common/Rectangle.h"
 
 bool extract_patches(const boost::filesystem::path &image_path,
                      const std::vector<Rectangle> &exclusions,

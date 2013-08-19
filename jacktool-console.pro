@@ -17,17 +17,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
            patchtool.cpp \
-           extract_patch.cpp \
-           ../jacktool-common/markings.cpp \
-    patchextractor.cpp
+           patchextractor.cpp \
+           ../jacktool-common/markings.cpp
 
 HEADERS  += patchtool.h \
-           extract_patch.h \
+            patchextractor.h\
            ../jacktool-common/markings.h \
-           ../jacktool-common/Rectangle.h \
-    patchextractor.h
-
-
+           ../jacktool-common/Rectangle.h
 
 unix {
     LIBS += -lopencv_core \

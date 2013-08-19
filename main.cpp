@@ -1,11 +1,19 @@
+#include <vector>
 #include <string>
 
 #include <boost/filesystem.hpp>
+#include <boost/program_options.hpp>
 
 #include <QStringList>
 #include <QDir>
 
 #include "../jacktool-common/markings.h"
+#include "patchextractor.h"
+
+
+
+#define INPUT "input-dirs"
+#define OUTPUT "output-dirs"
 
 
 
@@ -30,35 +38,39 @@ QStringList imagesInSourceFolder(std::string folder)
 
 int main(int argc, char *argv[])
 {
-    if (argc < 3)
+    boost::program_options::options_description desc("Usage:");
+    desc.add_options()
+        ("output-dirs,o", boost::program_options::value< std::vector<boost::filesystem::path> >(), "Where patches will be written to")
+        ("input-dirs,i",  boost::program_options::value< std::vector<boost::filesystem::path> >(), "Directories with images and their exclusion data.")
+    ;
+    boost::program_options::variables_map vars;
+    boost::program_options::store(boost::program_options::parse_command_line(argc, argv, desc), vars);
+    boost::program_options::notify(vars);
+
+    if (!vars.count(OUTPUT) && !vars.count(INPUT))
     {
+        std::cout << desc << std::endl;
         return 1;
     }
 
-
-    boost::filesystem::path destinationFolder = argv[1];
-
-
-
-    std::vector<std::string> directories;
-    for (int i = 2; i < argc; ++i)
-    {
-        directories.push_back(argv[i]);
-    }
+    const std::vector<boost::filesystem::path> outputFolders = vars[OUTPUT].as< std::vector<boost::filesystem::path> >();
+    const std::vector<boost::filesystem::path> inputFolders = vars[INPUT].as<  std::vector<boost::filesystem::path> >();
 
 
 
-    const PatchExtractorConfiguration cfg(destinationFolder);
+    PatchExtractor extractor(outputFolders);
 
-
-
-    std::vector<std::string>::const_iterator it = directories.begin();
-    const std::vector<std::string>::const_iterator end = directories.end();
+    std::vector<boost::filesystem::path>::const_iterator it = inputFolders.begin();
+    const std::vector<boost::filesystem::path>::const_iterator end = inputFolders.end();
     for(;it != end; ++it) //for each directory...
     {
         std::cout << "Processing images from " << *it << std::endl;
-        Markings markings(*it);
-        markings.processAll(cfg);
+        Markings markings(it->native());
+
+        if ( !extractor.extract(markings) )
+        {
+            break;
+        }
     }
 
     return 0;

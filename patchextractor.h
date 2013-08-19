@@ -3,25 +3,27 @@
 
 #include <vector>
 #include <boost/filesystem/path.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 #include <../jacktool-common/markings.h>
 
 class PatchExtractor
 {
 public:
-    PatchExtractor(std::vector<boost::filesystem::path> &outputFolders_);
+    PatchExtractor(const std::vector<boost::filesystem::path> &outputFolders_);
     bool extract(Markings & markings);
 
 private:
-    bool writeImage(const std::string & filename, const cv::Mat & image);
-    bool createFolderAsNeeded(boost::filesystem::path &dir);
+    bool createPathsAndWriteFile(const boost::filesystem::path &subdirectory, const std::string &fileName, const cv::Mat &patch);
 
-    bool rotate90,rotate180,rotate270;
-    int patchHeight, patchWidth;
+    const bool rotate90,rotate180,rotate270;
+    const int patchHeight, patchWidth;
 
-    std::vector<boost::filesystem::path>::const_iterator currentDir;
-    const std::vector<boost::filesystem::path>::const_iterator end;
     const std::vector<boost::filesystem::path> outputFolders;
+    std::vector<boost::filesystem::path>::const_iterator currentOutputDir;
+    const std::vector<boost::filesystem::path>::const_iterator endOutputDir;
 };
 
 #endif // PATCHEXTRACTOR_H
