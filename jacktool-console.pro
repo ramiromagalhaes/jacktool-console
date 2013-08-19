@@ -17,14 +17,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
            patchtool.cpp \
+           extract_patch.cpp \
            ../jacktool-common/markings.cpp \
-           ../jacktool-common/extract_patch.cpp
+    patchextractor.cpp
 
 HEADERS  += patchtool.h \
+           extract_patch.h \
            ../jacktool-common/markings.h \
-           ../jacktool-common/PatchExtractorConfiguration.h \
-           ../jacktool-common/extract_patch.h \
-           ../jacktool-common/Rectangle.h
+           ../jacktool-common/Rectangle.h \
+    patchextractor.h
 
 
 
@@ -34,5 +35,6 @@ unix {
             -lopencv_highgui \
             -lboost_serialization \
             -lboost_filesystem \
-            -lboost_system
+            -lboost_system \
+            -lboost_program_options
 }
