@@ -40,11 +40,15 @@ int main(int argc, char *argv[])
 {
     boost::program_options::options_description desc("Usage:");
     desc.add_options()
-        ("output-dirs,o", boost::program_options::value< std::vector<boost::filesystem::path> >(), "Where patches will be written to")
-        ("input-dirs,i",  boost::program_options::value< std::vector<boost::filesystem::path> >(), "Directories with images and their exclusion data.")
-    ;
+        ("output-dirs,o", boost::program_options::value< std::vector<std::string> >(), "Where patches will be written to")
+        ("input-dirs,i",  boost::program_options::value< std::vector<std::string> >(), "Directories with images and their exclusion data.");
     boost::program_options::variables_map vars;
-    boost::program_options::store(boost::program_options::parse_command_line(argc, argv, desc), vars);
+    boost::program_options::store(
+        boost::program_options::command_line_parser(argc, argv)
+            .options(desc)
+            .style(boost::program_options::command_line_style::unix_style)
+            .run(),
+        vars);
     boost::program_options::notify(vars);
 
     if (!vars.count(OUTPUT) && !vars.count(INPUT))
@@ -53,8 +57,23 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    const std::vector<boost::filesystem::path> outputFolders = vars[OUTPUT].as< std::vector<boost::filesystem::path> >();
-    const std::vector<boost::filesystem::path> inputFolders = vars[INPUT].as<  std::vector<boost::filesystem::path> >();
+    std::vector<boost::filesystem::path> outputFolders;
+    std::vector<boost::filesystem::path> inputFolders;
+
+    {//this is needed because https://svn.boost.org/trac/boost/ticket/8535
+        const std::vector<std::string> outputFoldersString = vars[OUTPUT].as< std::vector<std::string> >();
+        const std::vector<std::string> inputFoldersString = vars[INPUT].as<  std::vector<std::string> >();
+        for(std::vector<std::string>::const_iterator it = outputFoldersString.begin(); it != outputFoldersString.end(); ++it)
+        {
+            boost::filesystem::path p(*it);
+            outputFolders.push_back(p);
+        }
+        for(std::vector<std::string>::const_iterator it = inputFoldersString.begin(); it != inputFoldersString.end(); ++it)
+        {
+            boost::filesystem::path p(*it);
+            inputFolders.push_back(p);
+        }
+    }
 
 
 
@@ -72,6 +91,8 @@ int main(int argc, char *argv[])
             break;
         }
     }
+
+    std::cout << "Done processing.\n";
 
     return 0;
 }

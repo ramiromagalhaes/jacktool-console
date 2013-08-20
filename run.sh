@@ -11,5 +11,6 @@
 -i/home/ramiro/Imagens/2006-10-30-ViagemMinasGerais \
 -i/home/ramiro/Imagens/2008-01-13-JardimBotânico \
 -i/home/ramiro/Imagens/2008-03-01-MergulhoComAndrea \
-
+-i"/home/ramiro/Google Drive/2011-12-13-ViagemAosEUA" \
+-i"/home/ramiro/Google Drive/2013-05-25-NiverLipeNanda" \
 
