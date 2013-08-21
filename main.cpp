@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     }
 
     std::vector<boost::filesystem::path> outputFolders;
-    std::vector<boost::filesystem::path> inputFolders;
+    std::vector<boost::filesystem::path> inputMarkings;
 
     {//this is needed because https://svn.boost.org/trac/boost/ticket/8535
         const std::vector<std::string> outputFoldersString = vars[OUTPUT].as< std::vector<std::string> >();
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
         for(std::vector<std::string>::const_iterator it = inputFoldersString.begin(); it != inputFoldersString.end(); ++it)
         {
             boost::filesystem::path p(*it);
-            inputFolders.push_back(p);
+            inputMarkings.push_back(p);
         }
     }
 
@@ -79,12 +79,13 @@ int main(int argc, char *argv[])
 
     PatchExtractor extractor(outputFolders);
 
-    std::vector<boost::filesystem::path>::const_iterator it = inputFolders.begin();
-    const std::vector<boost::filesystem::path>::const_iterator end = inputFolders.end();
+    std::vector<boost::filesystem::path>::const_iterator it = inputMarkings.begin();
+    const std::vector<boost::filesystem::path>::const_iterator end = inputMarkings.end();
     for(;it != end; ++it) //for each directory...
     {
         std::cout << "Processing images from " << *it << std::endl;
-        Markings markings(it->native());
+        Markings markings;
+        markings.load(it->native());
 
         if ( !extractor.extract(markings) )
         {
