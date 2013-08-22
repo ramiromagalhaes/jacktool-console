@@ -12,4 +12,13 @@
 -i/home/ramiro/Imagens/2008-01-13-JardimBotânico.jacktool \
 -i/home/ramiro/Imagens/2008-03-01-MergulhoComAndrea.jacktool \
 -i/home/ramiro/Imagens/2011-12-13-ViagemAosEUA.jacktool \
--i/home/ramiro/Imagens/2013-05-25-NiverLipeNanda.jacktool
+-i/home/ramiro/Imagens/2013-05-25-NiverLipeNanda.jacktool \
+-i/home/ramiro/Imagens/2006-07-29-AntiguidadesYuri.jacktool \
+-i/home/ramiro/Imagens/2006-09-10-Parapente.jacktool \
+-i/home/ramiro/Imagens/2007-02-03-WorkshopComposicao.jacktool \
+-i/home/ramiro/Imagens/2007-02-20-RioWaterPlanet.jacktool \
+-i/home/ramiro/Imagens/2007-04-21-RedBullAirRace.jacktool \
+-i/home/ramiro/Imagens/2008-05-31-Pizza.jacktool \
+-i/home/ramiro/Imagens/2008-08-01-Argentina-album.jacktool \
+-i/home/ramiro/Imagens/2008-12-31-Caxambu.jacktool
+
