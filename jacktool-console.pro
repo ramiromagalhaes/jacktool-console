@@ -25,12 +25,11 @@ HEADERS  += patchtool.h \
            ../jacktool-common/markings.h \
            ../jacktool-common/Rectangle.h
 
-unix {
-    LIBS += -lopencv_core \
-            -lopencv_imgproc \
-            -lopencv_highgui \
-            -lboost_serialization \
-            -lboost_filesystem \
-            -lboost_system \
-            -lboost_program_options
-}
+LIBS += -lopencv_core \
+        -lopencv_imgproc \
+        -lopencv_highgui \
+        -lboost_serialization \
+        -lboost_filesystem \
+        -lboost_system \
+        -lboost_program_options
+
