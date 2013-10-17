@@ -1,3 +1,4 @@
+#!/bin/sh
 ./jacktool-console -o/mnt/fundo \
 -i/home/ramiro/workspace/markings/2006-12-17-Zoologico.jacktool \
 -i/home/ramiro/workspace/markings/2007-08-04-IlhaGrande.jacktool \
