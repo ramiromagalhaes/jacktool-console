@@ -1,16 +1,14 @@
 #include "patchextractor.h"
 #include <boost/filesystem.hpp>
 
-
+#define SOURCE_PATCH_SIZE 240
 
 PatchExtractor::PatchExtractor(const std::vector<boost::filesystem::path> &outputFolders_) : rotate90(false), rotate180(false), rotate270(false),
                                                                                         patchHeight(20), //Pavani et al; 2010 defaults
                                                                                         patchWidth(20),  //Viola, Jones; 2004 is 24x24
                                                                                         outputFolders(outputFolders_),
                                                                                         currentOutputDir(outputFolders.begin()),
-                                                                                        endOutputDir(outputFolders.end())
-{
-}
+                                                                                        endOutputDir(outputFolders.end()) {}
 
 bool PatchExtractor::extract(Markings & markings)
 {
@@ -35,12 +33,12 @@ bool PatchExtractor::extract(Markings & markings)
         int patch_counter = 0;
 
         //loops over the image trying to take patches from it
-        for (int h = 0; h < image.size().height - patchHeight; h += patchHeight)
+        for (int h = 0; h < image.size().height - SOURCE_PATCH_SIZE; h += SOURCE_PATCH_SIZE)
         {
-            for (int w = 0; w < image.size().width - patchHeight; w += patchWidth)
+            for (int w = 0; w < image.size().width - SOURCE_PATCH_SIZE; w += SOURCE_PATCH_SIZE)
             {
-                const int h_big = h + patchHeight;
-                const int w_big = w + patchWidth;
+                const int h_big = h + SOURCE_PATCH_SIZE;
+                const int w_big = w + SOURCE_PATCH_SIZE;
 
                 bool intersects = false;
 
@@ -66,10 +64,12 @@ bool PatchExtractor::extract(Markings & markings)
                 }
 
                 //Extract the patch.
-                const cv::Rect roi(w, h, patchWidth, patchHeight);
+                const cv::Rect roi(w, h, SOURCE_PATCH_SIZE, SOURCE_PATCH_SIZE);
                 cv::Mat patch(image, roi);
                 cv::cvtColor(patch, patch, CV_BGR2GRAY);
 
+                cv::Mat resizedPatch = cv::Mat(patchWidth, patchHeight, CV_8UC1);
+                cv::resize(patch, resizedPatch, cv::Size(patchWidth, patchHeight)/*, 0, 0, INTER_LINEAR*/);
 
                 //Sets the patch base filename. The final name will depend on other processing options.
                 std::stringstream patchBaseFilename;
@@ -77,7 +77,7 @@ bool PatchExtractor::extract(Markings & markings)
 
 
                 //Write the file somewhere
-                if ( !createPathsAndWriteFile(imagePath.parent_path().filename(), patchBaseFilename.str(), patch) )
+                if ( !createPathsAndWriteFile(imagePath.parent_path().filename(), patchBaseFilename.str(), resizedPatch) )
                 {
                     return false;
                 }
